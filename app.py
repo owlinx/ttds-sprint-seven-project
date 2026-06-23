@@ -7,7 +7,18 @@ st.header('Gráficos de Vehículos')
 # Leer los datos del archivo CSV
 car_data = pd.read_csv('vehicles_us.csv')
 
-print(car_data['odometer'])
+# ==== Correccion de tipos de datos ===
+car_data = car_data.astype({
+    'price': 'float64',
+    'model_year': 'Int64',
+    'cylinders': 'Int64',
+    'odometer': 'Int64',
+    'is_4wd': 'bool',
+    'date_posted': 'datetime64[ns]'
+})
+
+# === Eliminacion de valores NaN en la columna odometer ===
+car_data = car_data.dropna(subset=['odometer'])
 
 # Crear un botón en la aplicación Streamlit
 hist_button = st.button('Construir histograma')
